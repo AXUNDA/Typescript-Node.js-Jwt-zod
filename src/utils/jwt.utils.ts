@@ -4,11 +4,11 @@ import jwt  from "jsonwebtoken";
 const {privateKey,publicKey}:{privateKey:string,publicKey:string} = data
 
 
-function signJwt(object:object,options?:jwt.SignOptions | undefined){
+export function signJwt(object:object,options?:jwt.SignOptions | undefined){
       return jwt.sign(object,privateKey,
             {
                   ...(options && options),
-                  algorithm:"RS256"
+                  algorithm:"HS384"
             }
             
             )
@@ -16,10 +16,10 @@ function signJwt(object:object,options?:jwt.SignOptions | undefined){
 
 }
 
-function verifyJwt(token:string){
+export function verifyJwt(token:string){
 
       try {
-         const decoded =  jwt.verify(token,publicKey)
+         const decoded =  jwt.verify(token,privateKey)
          return {
             valid:true,
             expired:false,

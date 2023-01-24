@@ -5,6 +5,7 @@ import connect from "./utils/connect"
 import logger from "./utils/logger"
 import routes from "./routes"
 import data from "./data";
+import deserializeUser from "./middleware/deserilizeUser";
 
 const {port} = data
 
@@ -13,6 +14,7 @@ const {port} = data
 
 
 app.use(express.json())
+app.use(deserializeUser)
 app.use("/",routes)
 
 

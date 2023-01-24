@@ -28,9 +28,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userController = __importStar(require("./controller/user.controller"));
+const validateResource_1 = __importDefault(require("./middleware/validateResource"));
+const user_schema_1 = require("./schema/user.schema");
+const sessionController = __importStar(require("./controller/session.controller"));
+const session_schema_1 = require("./schema/session.schema");
+const requireUser_1 = require("./middleware/requireUser");
 const router = express_1.default.Router();
 router.get("/health", userController.healthCheck);
-router.post("/create/user", userController.createUser);
+router.post("/create/user", (0, validateResource_1.default)(user_schema_1.createUserSchema), userController.createUser);
+router.post("/api/session", (0, validateResource_1.default)(session_schema_1.createSessionSchema), sessionController.CreateSessionHandler);
+router.get("/api/session", requireUser_1.requireUser, sessionController.getUserSessions);
 // function routes (app:Express){
 //       app.get("/healthcheck",(req:Request,res:Response):Response=>{
 //             return res.status(200).json({health_status:"normal"})

@@ -9,8 +9,10 @@ const connect_1 = __importDefault(require("./utils/connect"));
 const logger_1 = __importDefault(require("./utils/logger"));
 const routes_1 = __importDefault(require("./routes"));
 const data_1 = __importDefault(require("./data"));
+const deserilizeUser_1 = __importDefault(require("./middleware/deserilizeUser"));
 const { port } = data_1.default;
 app.use(express_1.default.json());
+app.use(deserilizeUser_1.default);
 app.use("/", routes_1.default);
 app.listen(port, async () => {
     logger_1.default.info("server active");

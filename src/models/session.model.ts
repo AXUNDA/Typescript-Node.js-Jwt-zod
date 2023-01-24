@@ -14,13 +14,13 @@ interface Session {
 
 
 const sessionSchema = new Schema<Session>({
-  user: { type: Schema.Types.ObjectId,ref:"user", required: true },
+  user: { type: Schema.Types.ObjectId,ref:"User", required: true },
   valid: { type: Boolean,default:true },
   userAgent:{type:String}
   
 },{timestamps:true});
 
-const SessionModel = model<Session>('User', sessionSchema)
+const SessionModel = model<Session>('Session', sessionSchema)
 
 
 

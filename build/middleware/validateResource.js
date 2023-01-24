@@ -7,6 +7,7 @@ const validate = (schema) => (req, res, next) => {
             query: req.query,
             params: req.params
         });
+        next();
     }
     catch (e) {
         res.status(400).send(e.errors);
