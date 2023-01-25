@@ -1,6 +1,7 @@
 import { Request,Response,NextFunction } from "express"
 import { get } from "lodash"
 import { verifyJwt } from "../utils/jwt.utils"
+import { reIssueToken } from "../services/session.service";
 
 
 
@@ -10,7 +11,8 @@ import { verifyJwt } from "../utils/jwt.utils"
       try {
             const authHeader = req.headers.authorization;
       const accessToken  = authHeader!.split(" ")[1];
-      const refreshToken = req.headers.refreshToken
+     const refreshToken:any = get(req, "headers.x-refresh");
+      
       console.log(accessToken)
       if(!accessToken){
       // console.log("hello world")
@@ -26,6 +28,17 @@ import { verifyJwt } from "../utils/jwt.utils"
       }
 
       if(expired && refreshToken){
+            const newAccessToken =  await reIssueToken({refreshToken})
+
+            if(newAccessToken){
+                  res.setHeader("x-access-token",newAccessToken)
+                const decoded = verifyJwt(newAccessToken)
+            res.locals.user = decoded
+            return next()
+
+
+
+            }
             
       }
 

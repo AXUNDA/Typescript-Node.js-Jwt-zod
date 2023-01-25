@@ -1,5 +1,6 @@
 import UserModel,{IUser} from "../models/user.model"
 import { omit } from "lodash";
+import { FilterQuery } from "mongoose";
 
 import hash from "../utils/hash";
 import check from "../utils/checkPassword";
@@ -39,4 +40,9 @@ export async function validatePassword({email, password}:{email:string,password:
      
 
 
+}
+
+export async function findUser(query:FilterQuery<IUser>) {
+      return await UserModel.findOne(query).lean()
+      
 }
