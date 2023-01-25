@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserSessions = exports.CreateSessionHandler = void 0;
+exports.deleteSession = exports.getUserSessions = exports.CreateSessionHandler = void 0;
 const user_service_1 = require("../services/user.service");
 const session_service_1 = require("../services/session.service");
 const jwt_utils_1 = require("../utils/jwt.utils");
@@ -9,7 +9,7 @@ async function CreateSessionHandler(req, res) {
     try {
         const user = await (0, user_service_1.validatePassword)(req.body);
         if (!user) {
-            res.status(404).json({
+            return res.status(404).json({
                 status: "error",
                 message: "invalid credentials"
             });
@@ -34,10 +34,19 @@ async function getUserSessions(req, res) {
     try {
         const user = res.locals.user._doc._id;
         const session = await (0, session_service_2.findSession)({ user: user, valid: true });
-        return res.send(session);
+        return res.send(res.locals.user);
     }
     catch (error) {
         throw new Error(error);
     }
 }
 exports.getUserSessions = getUserSessions;
+async function deleteSession(req, res) {
+    await (0, session_service_2.updateSession)({ _id: res.locals.user.session }, { valid: false });
+    console.log(res.locals.user._doc._id);
+    res.send({
+        accessToken: null,
+        refreshToken: null
+    });
+}
+exports.deleteSession = deleteSession;

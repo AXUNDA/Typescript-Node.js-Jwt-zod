@@ -33,11 +33,18 @@ const user_schema_1 = require("./schema/user.schema");
 const sessionController = __importStar(require("./controller/session.controller"));
 const session_schema_1 = require("./schema/session.schema");
 const requireUser_1 = require("./middleware/requireUser");
+const product_schema_1 = require("./schema/product.schema");
+const productHandler = __importStar(require("./controller/Product.controller"));
 const router = express_1.default.Router();
 router.get("/health", userController.healthCheck);
 router.post("/create/user", (0, validateResource_1.default)(user_schema_1.createUserSchema), userController.createUser);
 router.post("/api/session", (0, validateResource_1.default)(session_schema_1.createSessionSchema), sessionController.CreateSessionHandler);
 router.get("/api/session", requireUser_1.requireUser, sessionController.getUserSessions);
+router.delete("/api/session", requireUser_1.requireUser, sessionController.deleteSession);
+router.post("/api/products", [requireUser_1.requireUser, (0, validateResource_1.default)(product_schema_1.createProductSchema)], productHandler.createProductHandler);
+router.put("/api/products/:_id", [requireUser_1.requireUser, (0, validateResource_1.default)(product_schema_1.updateProductSchema)], productHandler.updateProductHandler);
+router.delete("/api/products/:_id", [requireUser_1.requireUser, (0, validateResource_1.default)(product_schema_1.deleteProductSchema)], productHandler.deleteProductHandler);
+router.get("/api/products/:_id", [requireUser_1.requireUser, (0, validateResource_1.default)(product_schema_1.getProductSchema)], productHandler.getProductHandler);
 // function routes (app:Express){
 //       app.get("/healthcheck",(req:Request,res:Response):Response=>{
 //             return res.status(200).json({health_status:"normal"})

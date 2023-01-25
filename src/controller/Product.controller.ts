@@ -1,6 +1,8 @@
 import { Request,Response } from "express";
 import { CreateProductInput, UpdateProductInput } from "../schema/product.schema";
 import { createProduct, findAndUpdateProduct, getProduct,deleteProduct } from "../services/product.service";
+import { UpdateQuery } from "mongoose";
+import { Product } from "../models/product.model";
 
 
 
@@ -23,16 +25,17 @@ export async function createProductHandler(req:Request< {},{}, CreateProductInpu
 export async function updateProductHandler(req:Request<UpdateProductInput["params"]>,res:Response){
       const userId = res.locals.user._doc._id;
       const productId = req.params._id;
-      const update =req.body
-      const product = await getProduct({productId})
+      const update:UpdateQuery<Product> =req.body
+      const product = await getProduct({_id:productId})
       if(!product){
             res.sendStatus(404)
       }
-      if(product!.user ! == userId){
+      if(String(product!.user ) !== userId){
             res.sendStatus(404)
+            console.log(userId,String(product!.user))
 
       }
-const updatedProduct  = findAndUpdateProduct({_id:product!._id},update,{new:true})
+const updatedProduct  = await findAndUpdateProduct({_id:product!._id},update,{new:true})
 return res.send(updatedProduct)
 
 }
@@ -45,7 +48,7 @@ export async function deleteProductHandler(req:Request<UpdateProductInput["param
       if(!product){
             res.sendStatus(404)
       }
-      if(product!.user ! == userId){
+      if(String(product!.user) ! == userId){
             res.sendStatus(404)
 
       }
@@ -59,7 +62,7 @@ return res.sendStatus(200)
 
 export async function getProductHandler(req:Request<UpdateProductInput["params"]>,res:Response){
       const productId = req.params._id;
-      const product = await getProduct({ productId });
+      const product = await getProduct({_id: productId });
 
   if (!product) {
     return res.sendStatus(404);

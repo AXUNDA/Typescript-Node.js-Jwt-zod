@@ -5,6 +5,8 @@ import { createUserSchema } from "./schema/user.schema"
 import * as sessionController from "./controller/session.controller"
 import { createSessionSchema } from "./schema/session.schema"
 import { requireUser } from "./middleware/requireUser"
+import { createProductSchema,updateProductSchema,deleteProductSchema,getProductSchema } from "./schema/product.schema"
+import * as productHandler from "./controller/Product.controller"
 
 
 
@@ -23,6 +25,19 @@ router.get("/api/session",requireUser,   sessionController.getUserSessions)
 
 
 router.delete("/api/session",requireUser,   sessionController.deleteSession)
+
+
+router.post("/api/products",[requireUser,validate(createProductSchema)],productHandler.createProductHandler)
+
+router.put("/api/products/:_id",[requireUser,validate(updateProductSchema)],productHandler.updateProductHandler)
+
+router.delete("/api/products/:_id",[requireUser,validate(deleteProductSchema)],productHandler.deleteProductHandler)
+
+router.get("/api/products/:_id",[requireUser,validate(getProductSchema)],productHandler.getProductHandler)
+
+
+
+
 
 
 

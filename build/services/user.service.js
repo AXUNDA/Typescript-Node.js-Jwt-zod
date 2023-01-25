@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validatePassword = exports.createUser = void 0;
+exports.findUser = exports.validatePassword = exports.createUser = void 0;
 const user_model_1 = __importDefault(require("../models/user.model"));
 const hash_1 = __importDefault(require("../utils/hash"));
 const checkPassword_1 = __importDefault(require("../utils/checkPassword"));
@@ -39,3 +39,7 @@ async function validatePassword({ email, password }) {
     }
 }
 exports.validatePassword = validatePassword;
+async function findUser(query) {
+    return await user_model_1.default.findOne(query).lean();
+}
+exports.findUser = findUser;

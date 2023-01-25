@@ -13,7 +13,7 @@ export async function CreateSessionHandler(req:Request,res:Response){
       try {
       const user = await validatePassword(req.body)
       if(!user){
-            res.status(404).json({
+           return res.status(404).json({
                   status:"error",
                   message:"invalid credentials"
             })
