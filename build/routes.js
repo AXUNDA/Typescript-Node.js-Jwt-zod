@@ -1,18 +1,18 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
     if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
+        desc = { enumerable: true, get: function () { return m[k]; } };
     }
     Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
+}) : (function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
     Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
+}) : function (o, v) {
     o["default"] = v;
 });
 var __importStar = (this && this.__importStar) || function (mod) {
@@ -45,10 +45,5 @@ router.post("/api/products", [requireUser_1.requireUser, (0, validateResource_1.
 router.put("/api/products/:_id", [requireUser_1.requireUser, (0, validateResource_1.default)(product_schema_1.updateProductSchema)], productHandler.updateProductHandler);
 router.delete("/api/products/:_id", [requireUser_1.requireUser, (0, validateResource_1.default)(product_schema_1.deleteProductSchema)], productHandler.deleteProductHandler);
 router.get("/api/products/:_id", [requireUser_1.requireUser, (0, validateResource_1.default)(product_schema_1.getProductSchema)], productHandler.getProductHandler);
-// function routes (app:Express){
-//       app.get("/healthcheck",(req:Request,res:Response):Response=>{
-//             return res.status(200).json({health_status:"normal"})
-//       })
-//       app.post("/api/user",validate(createUserSchema),createUserHandler)
-// }
+
 exports.default = router;

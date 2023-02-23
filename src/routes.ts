@@ -46,13 +46,6 @@ router.get("/api/products/:_id",[requireUser,validate(getProductSchema)],product
 
 
 
-// function routes (app:Express){
-//       app.get("/healthcheck",(req:Request,res:Response):Response=>{
-//             return res.status(200).json({health_status:"normal"})
 
-//       })
-//       app.post("/api/user",validate(createUserSchema),createUserHandler)
-
-// }
 
 export default router
