@@ -17,7 +17,7 @@ body:object({
       ,
       email:string({
             required_error:"email is required"
-      }).email("valid email is required")
+      }).email("a valid email is required")
 
 
 
