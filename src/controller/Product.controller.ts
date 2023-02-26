@@ -11,6 +11,7 @@ import { Product } from "../models/product.model";
 
 export async function createProductHandler(req:Request< {},{}, CreateProductInput['body']>,res:Response) {
       const userId = res.locals.user._doc._id;
+      
 
       const body = req.body;
     
