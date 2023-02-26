@@ -5,7 +5,7 @@ export const createUserSchema = object({
 
 body:object({
       name:string({
-            required_error:"Name is required"
+            required_error:"name is required"
       }),
       password:string({
             required_error:"password is required"
